@@ -318,7 +318,29 @@ function updateComment(url, request) {
 
   return response;
 }
-function deleteComment(id) {}
+
+function deleteComment(url, request) {
+  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const savedComment = database.comments[id];
+  const response = {};
+
+  if (!database.comments[id]) {
+    response.status = 404;
+  } else if (savedComment) {
+    database.comments[id] = null;
+    const articleCommentIds =
+      database.articles[savedComment.articleId].commentIds;
+    articleCommentIds.splice(articleCommentIds.indexOf(id), 1);
+    const authorCommentIds = database.users[savedComment.username].commentIds;
+    authorCommentIds.splice(authorCommentIds.indexOf(id), 1);
+
+    response.status = 204;
+  } else {
+    response.status = 400;
+  }
+
+  return response;
+}
 function upvoteComment(id) {}
 function downvoteComment(id) {}
 
