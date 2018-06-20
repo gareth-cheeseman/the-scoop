@@ -46,8 +46,12 @@ const routes = {
   }
 };
 
+function getUsername(url) {
+  return url.split('/').filter(segment => segment)[1];
+}
+
 function getUser(url, request) {
-  const username = url.split('/').filter(segment => segment)[1];
+  const username = getUsername(url);
   const user = database.users[username];
   const response = {};
 
@@ -112,7 +116,7 @@ function getArticles(url, request) {
 }
 
 function getArticle(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const article = database.articles[id];
   const response = {};
 
@@ -131,6 +135,10 @@ function getArticle(url, request) {
 
   return response;
 }
+function getId(url) {
+  return Number(url.split('/').filter(segment => segment)[1]);
+}
+
 function createArticle(url, request) {
   const requestArticle = request.body && request.body.article;
   const response = {};
@@ -165,7 +173,7 @@ function createArticle(url, request) {
 }
 
 function updateArticle(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const savedArticle = database.articles[id];
   const requestArticle = request.body && request.body.article;
   const response = {};
@@ -186,7 +194,7 @@ function updateArticle(url, request) {
 }
 
 function deleteArticle(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const savedArticle = database.articles[id];
   const response = {};
 
@@ -209,7 +217,7 @@ function deleteArticle(url, request) {
 }
 
 function upvoteArticle(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const username = request.body && request.body.username;
   let savedArticle = database.articles[id];
   const response = {};
@@ -227,7 +235,7 @@ function upvoteArticle(url, request) {
 }
 
 function downvoteArticle(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const username = request.body && request.body.username;
   let savedArticle = database.articles[id];
   const response = {};
@@ -300,7 +308,7 @@ function createComment(url, request) {
 }
 function getComment(id) {}
 function updateComment(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const savedComment = database.comments[id];
   const requestComment = request.body && request.body.comment;
   const response = {};
@@ -320,7 +328,7 @@ function updateComment(url, request) {
 }
 
 function deleteComment(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const savedComment = database.comments[id];
   const response = {};
 
@@ -342,7 +350,7 @@ function deleteComment(url, request) {
   return response;
 }
 function upvoteComment(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const username = request.body && request.body.username;
   let savedComment = database.comments[id];
   const response = {};
@@ -359,7 +367,7 @@ function upvoteComment(url, request) {
   return response;
 }
 function downvoteComment(url, request) {
-  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const id = getId(url);
   const username = request.body && request.body.username;
   let savedComment = database.comments[id];
   const response = {};
