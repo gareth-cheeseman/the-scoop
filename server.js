@@ -47,11 +47,9 @@ const routes = {
     PUT: downvoteArticle
   },
   '/comments': {
-    GET: getComments,
     POST: createComment
   },
   '/comments/:id': {
-    GET: getComment,
     PUT: updateComment,
     DELETE: deleteComment
   },
@@ -323,7 +321,7 @@ function createComment(url, request) {
 
   return response;
 }
-function getComment(id) {}
+
 function updateComment(url, request) {
   const id = getId(url);
   const savedComment = database.comments[id];
