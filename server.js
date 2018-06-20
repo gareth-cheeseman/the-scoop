@@ -287,11 +287,9 @@ function downvote(item, username) {
   return item;
 }
 
-function getComments() {}
 function createComment(url, request) {
   const requestComment = request.body && request.body.comment;
   const response = {};
-  debugger;
   if (
     requestComment &&
     requestComment.articleId &&
